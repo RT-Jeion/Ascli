@@ -1,43 +1,41 @@
 class ChatSessionNumberExceeded(Exception):
     """Raised when a user tries to withdraw more money than they have."""
+
     pass
 
 
-from pymongo import MongoClient
-
-client = MongoClient("mongodb://localhost:27017/")
-
-db = ["Ascli"]
-
-chat_sessions = db['Sessions']
-
-
-def chat_session() -> int:
-    import json
+def new_session():
     import random
-    try:
-        with open("chat_session.json", "r") as f:
-            chats = json.load(f)
-    except:
-        chats = []
-        print(chats)
+    from pymongo import MongoClient
+
+    client = MongoClient("mongodb://localhost:27017/")
+    db = client["Ascli"]
+
+    sessions = db["Sessions"]
+
+    sessions_id = sessions.find({}, {"_id": 1})
+    sessions_id = [i["_id"] for i in list(sessions_id)]
+
     try:
         while True:
-            new_chat = random.randint(10000000,999999999)
-            if new_chat not in chats:
-                chats.append(new_chat)
+            new_session = random.randint(10000000, 99999999)
+            if new_session not in sessions_id:
+                print("New session:", new_session)
+
+                sessions.insert_one({"_id": new_session})
+
                 break
-            raise ChatSessionNumberExceeded("Chat session number exceeded in 8 digit value")
+            raise ChatSessionNumberExceeded(
+                "Chat session number exceeded in 8 digit value"
+            )
 
-        with open("chat_session.json", 'w') as f:
-            json.dump(chats, f)
+        return new_session
 
-            return new_chat
     except ChatSessionNumberExceeded as e:
         print(e)
     except Exception as e:
         print("Error found:", e)
 
-if __name__=="__main__":
-    chat = chat_session()
-    print(chat)
+
+if __name__ == "__main__":
+    chat = new_session()

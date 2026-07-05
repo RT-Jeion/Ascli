@@ -1,13 +1,12 @@
 from pymongo import MongoClient
-from get_time import get_time
 
 client = MongoClient("mongodb://localhost:27017/")
 
 db = client["Ascli"]
 
+sessions = db["Sessions"]
 
-print(db.list_collection_names())
+x = sessions.find({}, {"_id": 1})
 
-time = get_time()
-
-print(time)
+for i in x:
+    print(i)

@@ -1,7 +1,7 @@
 from ddgs import DDGS
 
 
-def web_search(query: str, max_results: int = 10) -> str:
+def web_search(query: str, max_results: int = 10):
     """Searches the web for the given query and returns a text summary of results."""
 
     try:
@@ -13,7 +13,9 @@ def web_search(query: str, max_results: int = 10) -> str:
 
         formatted_results = []
         for r in results:
-            formatted_results.append(f"Title: {r['title']}\nURL: {r['href']}\nSnippet: {r['body']}\n")
+            formatted_results.append(
+                f"Title: {r['title']}\nURL: {r['href']}\nSnippet: {r['body']}\n"
+            )
         return formatted_results
 
     except Exception as e:
@@ -25,3 +27,4 @@ if __name__ == "__main__":
     for i, r in enumerate(result):
         print(f"Result no.{i}")
         print(r)
+
