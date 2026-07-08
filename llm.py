@@ -22,7 +22,7 @@ tools = {
 
 
 def agent(user_prompt: str, chat_id=None):
-
+    print("## Sending Request to AI.")
     chat_data = {
         "_id": chat_id,
         "User Input": user_prompt,
@@ -44,7 +44,7 @@ def agent(user_prompt: str, chat_id=None):
             model=model_name, messages=messages, tools=tools_schema, tool_choice="auto"
         )
 
-        print("Requested to Model")
+        print("## Requested to Model")
 
         response_msg = response.choices[0].message
 
@@ -54,7 +54,9 @@ def agent(user_prompt: str, chat_id=None):
             "Prompt Tokens": usage.prompt_tokens,
             "Total Tokens": usage.total_tokens,
         }
-
+        print(
+            f"## Usgae Tokens; Total: {usage.total_tokens} | Prompt: {usage.prompt_tokens} | Completion: {usage.completion_tokens}"
+        )
         assistant_message = {
             "role": response_msg.role,
             "content": response_msg.content or "",
@@ -77,7 +79,7 @@ def agent(user_prompt: str, chat_id=None):
 
         tools_called = []
         if response_msg.tool_calls:
-            print("Tools Calling")
+            print("# Tools Calling")
             caller = True
             for tool_call in response_msg.tool_calls:
                 func_name = tool_call.function.name
@@ -87,7 +89,7 @@ def agent(user_prompt: str, chat_id=None):
 
                 if exc_tool:
                     print(
-                        f"\n[Agent] Executing tool {func_name} with Arguments: {func_args}"
+                        f"# [Agent] Executing tool {func_name} with Arguments: {func_args}"
                     )
                     tool_output = exc_tool(**func_args)
                 else:
@@ -124,6 +126,8 @@ def agent(user_prompt: str, chat_id=None):
         chat_data["Usage"]["Total Tokens"] += usage.total_tokens
         chat_data["Usage"]["Input Tokens"] += usage.prompt_tokens
         chat_data["Usage"]["Output Tokens"] += usage.completion_tokens
+
+    print("## AI generated a Response.")
 
     chat_data["Agent Output"] = agent_reply
 

@@ -37,7 +37,7 @@ def new_session():
 
 def update_session(chat, session_id):
 
-    print("Chat Has Been Updating of Session:", session_id)
+    print("[DB]: Chat Has Been Updating of Session:", session_id)
 
     session_db = db[f"Session: {session_id}"]
     sessions = db["Sessions"]
@@ -62,7 +62,7 @@ def update_session(chat, session_id):
         },
     )
 
-    print("Chat Has been Updated")
+    print("[DB]: Chat Has been Updated")
 
 
 def exsiting_session():
@@ -74,7 +74,7 @@ def exsiting_session():
     while True:
         num = 1
         choices = dict()
-        print("Showing Last 5 session.")
+        print("[DB]: Showing Last 5 session.")
         for session in sessions.find().sort("Last Used", sorting):
             id = session["_id"]
             last_used = session["Last Used"]
@@ -83,17 +83,19 @@ def exsiting_session():
 
             choices[num] = [id, last_used, tokens_usage]
 
-            print("Sessions no:", num)
+            print("\nSessions number:", num)
             print("Session ID:", id)
+            print("--------------------------")
             print("Last Used:", last_used)
             print(tokens_usage)
+            print("---------------------------")
             num += 1
             if limit:
                 if num > limit:
                     break
 
         print(
-            "Enter session number to Continue.\nOr Enter [0] to show all sessions.\nOr Enter [-1] to show old 5 sessions"
+            "\nEnter session number to Continue.\nOr Enter [0] to show all sessions.\nOr Enter [-1] to show old 5 sessions"
         )
 
         res = int(input("==>"))
