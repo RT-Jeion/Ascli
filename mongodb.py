@@ -1,12 +1,17 @@
 from pymongo import MongoClient
 
+from datetime import datetime
+
+now_time = datetime.now()
+
 client = MongoClient("mongodb://localhost:27017/")
 
 db = client["Ascli"]
 
-sessions = db["Sessions"]
+session = db["Sessions"]
+session_id = 46754127
 
-x = sessions.find({}, {"_id": 1})
+session.update_one({"_id": session_id}, {"$set"})
 
-for i in x:
-    print(i)
+for chat in session.find({"_id": session_id}):
+    print(chat)

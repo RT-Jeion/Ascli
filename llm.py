@@ -12,7 +12,6 @@ api = os.getenv("GROQ_API_KEY")
 
 client = Groq(api_key=api)
 
-print(f"Model Name: {model_name}")
 
 tools = {
     "web_search": web_search,
@@ -25,7 +24,7 @@ tools = {
 def agent(user_prompt: str, chat_id=None):
 
     chat_data = {
-        "Chat ID": chat_id,
+        "_id": chat_id,
         "User Input": user_prompt,
         "Agent Output": None,
         "Date & Time": {"Time": get_time(), "Day": get_day(), "Year": get_year()},
@@ -126,11 +125,6 @@ def agent(user_prompt: str, chat_id=None):
         chat_data["Usage"]["Input Tokens"] += usage.prompt_tokens
         chat_data["Usage"]["Output Tokens"] += usage.completion_tokens
 
-    with open("messages.json", "w") as f:
-        json.dump(messages, f, indent=1)
-
     chat_data["Agent Output"] = agent_reply
-    with open("chat.json", "w") as f:
-        json.dump(chat_data, f, indent=1)
 
-    return agent_reply
+    return agent_reply, chat_data
