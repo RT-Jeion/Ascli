@@ -1,0 +1,9 @@
+ddgs
+pymongo
+chromadb
+groq
+dotenv
+wikipedia
+Ebooklib
+beautifulsoup4
+sentence-transformers
