@@ -1,10 +1,10 @@
 import os
 import json
 from groq import Groq
-from get_time import get_time, get_day, get_year
-from file_handle import file_writer, file_reader, read_dir
-from essentials import model_name, tools_schema, system_prompt
-from web import web_search
+from Utils.get_time import get_time, get_day, get_year
+from Tools.file_handle import file_writer, file_reader, read_dir
+from Tools.essentials import model_name, tools_schema, system_prompt
+from Tools.web import web_search
 from dotenv import load_dotenv
 
 load_dotenv()

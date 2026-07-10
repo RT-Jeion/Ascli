@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 import random
-from get_time import get_time, get_day, get_year
+from Utils.get_time import get_time, get_day, get_year
 
 from datetime import datetime
 

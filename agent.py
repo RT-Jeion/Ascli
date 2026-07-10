@@ -1,5 +1,10 @@
-from llm import agent, model_name
-from chat_session import exsiting_session, get_chat_id, new_session, update_session
+from LLMs.llm1 import agent, model_name
+from DB_management.chat_session import (
+    exsiting_session,
+    get_chat_id,
+    new_session,
+    update_session,
+)
 
 print("WELCOME to ASCLI AI Agent")
 print("Model Name:", model_name)
